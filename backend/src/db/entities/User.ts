@@ -6,6 +6,7 @@ export class User extends BaseEntity {
 	@Property()
 	email!: string;
 
+
 }
 // export const schema = new EntitySchema({
 //     class: User,

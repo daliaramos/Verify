@@ -1,10 +1,12 @@
 import 'chai/register-should.js';
 import {test, teardown} from "tap";
-//import {faker} from "@faker-js/faker";
-import app from '../app.js';
+import {faker} from "@faker-js/faker";
+import app from '../src/app.js';
+teardown(()=> app.close());
 
 
-test("requesttt the /hello route", async()=> {
+/* eslint-disable */
+test("request the /hello route", async()=> {
     const response = await app.inject({
         method:"GET",
         url:"/hello"
@@ -13,4 +15,4 @@ test("requesttt the /hello route", async()=> {
     response.body.should.equal("hello");
 });
 
-teardown(()=> app.close());
+

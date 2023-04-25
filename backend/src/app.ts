@@ -1,9 +1,10 @@
-import Fastify, {FastifyInstance, FastifyReply, FastifyRequest} from "fastify";
-import {FastifyMikroOrmPlugin} from "./plugins/mikro";
-import config from "./db/mikro-orm.config";
-import {User} from "./db/entities/User";
+import Fastify, {FastifyReply, FastifyRequest} from "fastify";
+import {FastifyMikroOrmPlugin} from "./plugins/mikro.js";
+import config from "./db/mikro-orm.config.js";
+import {User} from "./db/entities/User.js";
 
-const app: FastifyInstance = Fastify();
+/* eslint-disable */
+const app = Fastify();
 await app.register(FastifyMikroOrmPlugin, config);
 app.get("/hello", async(req:FastifyRequest, reply:FastifyReply) =>{
     return "hello";
