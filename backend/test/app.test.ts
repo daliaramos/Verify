@@ -16,3 +16,10 @@ test("request the /hello route", async()=> {
 });
 
 
+test("List users from /dbtest", async() =>{
+    const response = await app.inject({
+        method: "GET",
+        url: "/dbTest"
+    });
+    response.statusCode.should.equal(200);
+});
