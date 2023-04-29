@@ -72,7 +72,24 @@ async function DoggerRoutes(app: FastifyInstance, _options = {}){
 		}
 	});
 
+	//update
+	app.put<{
+		Body:{
+			name: string,
+			email: string,
+			petType: string
+		}
+	}>("/users", async(req, reply) => {
+		const {name, email, petType} = req.body;
 
+		const userToChange = await req.em.findOne(User, {email});
+		userToChange.name = name;
+		userToChange.petType = petType;
+
+		await req.em.flush();
+		console.log(userToChange);
+		reply.send(userToChange);
+	});
 
 }
 export default DoggerRoutes;
