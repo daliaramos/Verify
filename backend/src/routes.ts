@@ -11,9 +11,30 @@ async function DoggerRoutes(app: FastifyInstance, _options = {}){
 	app.get("/hello", async(req:FastifyRequest, reply:FastifyReply) =>{
 		return "hello";
 	});
+
+
 	app.get("/dbTest", async(req:FastifyRequest, reply:FastifyReply) =>{
 		return req.em.find(User, {});
 	});
+
+	/* //Core method for adding generic SEARCH http method
+	app.route<{Body: {email:string}}>({
+		method: "SEARCH",
+		url: "/users",
+		handler: async(req, reply) => {
+			const {email} = req.body;
+			try{
+				const theUser = await req.em.findOne(User, {email});
+				console.log(theUser);
+				reply.send(theUser);
+			}catch(err){
+				console.log(err);
+				reply.send(err);
+			}
+		}
+	});
+	*/
+
 	app.post<{
 		Body:{
 			name: string,
@@ -37,5 +58,54 @@ async function DoggerRoutes(app: FastifyInstance, _options = {}){
 			return reply.status(500).send({message: err.message});
 		}
 	});
+
+	//READ
+	app.search("/users", async(req, reply) => {
+		const {email} = req.body;
+		try{
+			const theUser = await req.em.findOne(User, {email});
+			console.log(theUser);
+			reply.send(theUser);
+		}catch(err){
+			console.log(err);
+			reply.status(500).send(err);
+		}
+	});
+
+	//update
+	app.put<{
+		Body:{
+			name: string,
+			email: string,
+			petType: string
+		}
+	}>("/users", async(req, reply) => {
+		const {name, email, petType} = req.body;
+
+		const userToChange = await req.em.findOne(User, {email});
+		userToChange.name = name;
+		userToChange.petType = petType;
+
+		await req.em.flush();
+		console.log(userToChange);
+		reply.send(userToChange);
+	});
+
+
+	//Delete
+	app.delete<{Body: {email: string}}>("/users", async(req, reply) => {
+		const {email} = req.body;
+		try{
+			const theUser = await req.em.findOne(User, {email});
+
+			await req.em.remove(theUser).flush();
+			console.log(theUser);
+			reply.send(theUser);
+		}catch(err){
+			console.log(err);
+			reply.status(500).send(err);
+		}
+	});
+
 }
 export default DoggerRoutes;
