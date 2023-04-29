@@ -12,6 +12,11 @@ services:
       - POSTGRES_USER=doggr
       - POSTGRES_PASSWORD=doggr
       - POSTGRES_DB=doggr
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U doggr"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   backend:
     container_name: backend
@@ -27,7 +32,9 @@ services:
       - DB_PASS=doggr
       - HOST=0.0.0.0
       - PORT=8080
-      - PORT=8080
+    depends_on:
+      postgres:
+        condition: service_healthy
 volumes:
   db:
     driver: local
