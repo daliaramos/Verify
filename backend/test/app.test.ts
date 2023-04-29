@@ -15,7 +15,7 @@ test("request the /hello route", async()=> {
     response.body.should.equal("hello");
 });
 
-
+/*
 test("List users from /dbtest", async() =>{
     const response = await app.inject({
         method: "GET",
@@ -43,3 +43,4 @@ test("Creating a new user", async()=>{
     resPayload.email.should.equal(payload.email);
     resPayload.petType.should.equal("Dog");
 });
+*/

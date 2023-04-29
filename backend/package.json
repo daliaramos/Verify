@@ -12,7 +12,7 @@
     "start": "node build/index.js",
     "schema:update": "pnpm mikro-orm-esm schema:update --run --fk-checks",
     "schema:drop": "pnpm mikro-orm-esm schema:drop --run",
-    "seed:create": "mikro-orm-esm seeder:create",
+    "seed:create": "pnpm mikro-orm-esm seeder:create",
     "seed:run": "pnpm mikro-orm-esm seeder:run",
     "db:reset": "pnpm schema:drop && pnpm schema:update && pnpm seed:run"
   },
