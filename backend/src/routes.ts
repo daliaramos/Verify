@@ -91,5 +91,21 @@ async function DoggerRoutes(app: FastifyInstance, _options = {}){
 		reply.send(userToChange);
 	});
 
+
+	//Delete
+	app.delete<{Body: {email: string}}>("/users", async(req, reply) => {
+		const {email} = req.body;
+		try{
+			const theUser = await req.em.findOne(User, {email});
+
+			await req.em.remove(theUser).flush();
+			console.log(theUser);
+			reply.send(theUser);
+		}catch(err){
+			console.log(err);
+			reply.status(500).send(err);
+		}
+	});
+
 }
 export default DoggerRoutes;
