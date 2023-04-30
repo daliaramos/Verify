@@ -1,6 +1,7 @@
 import {FastifyInstance, FastifyReply, FastifyRequest} from "fastify";
 import app from "./app.js";
 import {User} from "./db/entities/User.js";
+import {Match} from "./db/entities/Match.js";
 
 
 
@@ -106,6 +107,34 @@ async function DoggerRoutes(app: FastifyInstance, _options = {}){
 			reply.status(500).send(err);
 		}
 	});
+
+	//Create Match route
+	app.post<{
+		Body:{
+			email: string,
+			matchee_email: string
+		}
+	}>("/match", async(req, reply) => {
+		const { email, matchee_email} = req.body;
+
+		try{
+		const matchee = await req.em.findOne(User, {email: matchee_email});
+		const owner = await req.em.findOne(User, {email});
+
+		const newMatch = await req.em.create(Match, {
+			owner,
+			matchee
+		});
+
+		await req.em.flush();
+
+		return reply.send(newMatch);
+		}catch(err){
+			console.log(err);
+			return reply.status(500).send(err);
+		}
+	});
+
 
 }
 export default DoggerRoutes;

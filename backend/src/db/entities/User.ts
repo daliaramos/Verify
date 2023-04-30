@@ -1,5 +1,6 @@
-import { Collection, Entity, EntitySchema, OneToMany, PrimaryKey, Property, Unique } from "@mikro-orm/core";
+import {Cascade, Collection, Entity, EntitySchema, OneToMany, PrimaryKey, Property, Unique} from "@mikro-orm/core";
 import { BaseEntity } from "./BaseEntity.js";
+import {Match} from "./Match.js";
 
 @Entity({ tableName: "users" })
 export class User extends BaseEntity {	
@@ -15,11 +16,16 @@ export class User extends BaseEntity {
 	
 	@Property()
 	isMached: boolean = false;
+
+	@OneToMany(() => Match,
+		match => match.owner,
+		{cascade: [Cascade.PERSIST, Cascade.REMOVE]}
+	)
+	matches!: Collection<Match>;
+
+	@OneToMany(() => Match,
+		match => match.matchee,
+		{cascade: [Cascade.PERSIST, Cascade.REMOVE]})
+	matched_by!: Collection<Match>;
+
 }
-// export const schema = new EntitySchema({
-//     class: User,
-//     extends: "BaseEntity",
-//     properties: {
-//         email: { type: "string" },
-//     },
-// });

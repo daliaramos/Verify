@@ -30,8 +30,8 @@ services:
       - DB_NAME=doggr
       - DB_USER=doggr
       - DB_PASS=doggr
-      - HOST=0.0.0.0
       - PORT=8080
+      - HOST=0.0.0.0
     depends_on:
       postgres:
         condition: service_healthy
