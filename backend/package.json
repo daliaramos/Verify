@@ -34,7 +34,8 @@
     "@mikro-orm/seeder": "5.7.3",
     "dotenv": "^16.0.3",
     "fastify": "^4.16.3",
-    "fastify-plugin": "^4.5.0"
+    "fastify-plugin": "^4.5.0",
+    "mikro-orm-soft-delete": "^0.1.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",

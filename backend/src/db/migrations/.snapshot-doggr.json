@@ -35,6 +35,16 @@
           "length": 6,
           "mappedType": "datetime"
         },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamptz(0)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": 6,
+          "mappedType": "datetime"
+        },
         "email": {
           "name": "email",
           "type": "varchar(255)",
@@ -53,24 +63,14 @@
           "nullable": false,
           "mappedType": "string"
         },
-        "pet_type": {
-          "name": "pet_type",
+        "occupation": {
+          "name": "occupation",
           "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
           "mappedType": "string"
-        },
-        "is_mached": {
-          "name": "is_mached",
-          "type": "boolean",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "default": "false",
-          "mappedType": "boolean"
         }
       },
       "name": "users",
@@ -100,21 +100,12 @@
     },
     {
       "columns": {
-        "owner_id": {
-          "name": "owner_id",
-          "type": "int",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "integer"
-        },
-        "matchee_id": {
-          "name": "matchee_id",
-          "type": "int",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
           "nullable": false,
           "mappedType": "integer"
         },
@@ -127,42 +118,67 @@
           "nullable": false,
           "length": 6,
           "mappedType": "datetime"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamptz(0)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 6,
+          "mappedType": "datetime"
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamptz(0)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": 6,
+          "mappedType": "datetime"
+        },
+        "owner_id": {
+          "name": "owner_id",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "make_review": {
+          "name": "make_review",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
         }
       },
-      "name": "match",
+      "name": "review",
       "schema": "public",
       "indexes": [
         {
-          "keyName": "match_pkey",
+          "keyName": "review_pkey",
           "columnNames": [
-            "owner_id",
-            "matchee_id"
+            "id"
           ],
-          "composite": true,
+          "composite": false,
           "primary": true,
           "unique": true
         }
       ],
       "checks": [],
       "foreignKeys": {
-        "match_owner_id_foreign": {
-          "constraintName": "match_owner_id_foreign",
+        "review_owner_id_foreign": {
+          "constraintName": "review_owner_id_foreign",
           "columnNames": [
             "owner_id"
           ],
-          "localTableName": "public.match",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "public.users",
-          "updateRule": "cascade"
-        },
-        "match_matchee_id_foreign": {
-          "constraintName": "match_matchee_id_foreign",
-          "columnNames": [
-            "matchee_id"
-          ],
-          "localTableName": "public.match",
+          "localTableName": "public.review",
           "referencedColumnNames": [
             "id"
           ],

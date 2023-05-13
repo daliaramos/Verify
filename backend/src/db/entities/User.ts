@@ -1,33 +1,30 @@
-import {Cascade, Collection, Entity, EntitySchema, OneToMany, PrimaryKey, Property, Unique} from "@mikro-orm/core";
-import { BaseEntity } from "./BaseEntity.js";
-import {Match} from "./Match.js";
+import {Cascade, Collection, Entity, OneToMany, Property, Unique} from "@mikro-orm/core";
+//import {Comment} from "./Comment.js";
+import {Review} from "./Review.js";
+import { VerifyBaseEntity } from "./VerifyBaseEntity.js";
+import { SoftDeletable } from "mikro-orm-soft-delete";
 
-@Entity({ tableName: "users" })
-export class User extends BaseEntity {	
+SoftDeletable(() => User, "deleted_at", () => new Date());
+@Entity({ tableName: "users"})
+export class User extends VerifyBaseEntity  {
 	@Property()
 	@Unique()
 	email!: string;
-
+	
 	@Property()
 	name!: string;
 	
 	@Property()
-	petType!: string;
+	occupation!: string;
 	
-	
-	// Note that these DO NOT EXIST in the database itself!
+	//One user can have many reviews
 	@OneToMany(
-		() => Match,
-		match => match.owner,
-		{cascade: [Cascade.PERSIST, Cascade.REMOVE]}
+		() => Review,
+		review => review.owner,
+		{cascade: [Cascade.PERSIST, Cascade.REMOVE], orphanRemoval: true}
 	)
-	matches!: Collection<Match>;
+	commented!: Collection<Review>;
 	
-	@OneToMany(
-		() => Match,
-		match => match.matchee,
-		{cascade: [Cascade.PERSIST, Cascade.REMOVE]}
-	)
-	matched_by!: Collection<Match>;
-
+	
 }
+

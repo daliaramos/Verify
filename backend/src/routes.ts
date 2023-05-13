@@ -1,7 +1,8 @@
 import {FastifyInstance, FastifyReply, FastifyRequest} from "fastify";
 import app from "./app.js";
 import {User} from "./db/entities/User.js";
-import {Match} from "./db/entities/Match.js";
+import {Review} from "./db/entities/Review.js";
+
 
 
 
@@ -17,38 +18,21 @@ async function DoggerRoutes(app: FastifyInstance, _options = {}){
 	app.get("/dbTest", async(req:FastifyRequest, reply:FastifyReply) =>{
 		return req.em.find(User, {});
 	});
-
-	/* //Core method for adding generic SEARCH http method
-	app.route<{Body: {email:string}}>({
-		method: "SEARCH",
-		url: "/users",
-		handler: async(req, reply) => {
-			const {email} = req.body;
-			try{
-				const theUser = await req.em.findOne(User, {email});
-				console.log(theUser);
-				reply.send(theUser);
-			}catch(err){
-				console.log(err);
-				reply.send(err);
-			}
-		}
-	});
-	*/
+	
 
 	app.post<{
 		Body:{
 			name: string,
 			email: string,
-			petType: string
+			occupation: string
 		}
 	}>("/users", async(req, reply) => {
-		const {name, email, petType} = req.body;
+		const {name, email, occupation} = req.body;
 		try{
 			const newUser = await req.em.create(User,{
 				name,
 				email,
-				petType
+				occupation
 			});
 			await req.em.flush();
 			
@@ -78,14 +62,14 @@ async function DoggerRoutes(app: FastifyInstance, _options = {}){
 		Body:{
 			name: string,
 			email: string,
-			petType: string
+			occupation: string
 		}
 	}>("/users", async(req, reply) => {
-		const {name, email, petType} = req.body;
+		const {name, email, occupation} = req.body;
 
 		const userToChange = await req.em.findOne(User, {email});
 		userToChange.name = name;
-		userToChange.petType = petType;
+		userToChange.occupation = occupation;
 
 		await req.em.flush();
 		console.log(userToChange);
@@ -107,31 +91,30 @@ async function DoggerRoutes(app: FastifyInstance, _options = {}){
 			reply.status(500).send(err);
 		}
 	});
-	app.post<{Body: { email: string, matchee_email: string }}>("/match", async (req, reply) => {
-		const { email, matchee_email } = req.body;
+	
+	
+	app.post<{ Body: {reviewer_id: number, review:string}}>("/review", async (req, reply) => {
+		const { reviewer_id, review } = req.body;
 		
 		try {
-			// make sure that the matchee exists & get their user account
-			const matchee = await req.em.findOne(User, { email: matchee_email });
-			// do the same for the matcher/owner
-			const owner = await req.em.findOne(User, { email });
-			
-			//create a new match between them
-			const newMatch = await req.em.create(Match, {
-				owner,
-				matchee
+			const userRepository = req.em.getRepository(User);
+			const reviewerEntity = await userRepository.getReference(reviewer_id);
+			const newReview = await req.em.create(Review,{
+				owner:reviewerEntity,
+				makeReview: review,
 			});
-			
-			//persist it to the database
 			await req.em.flush();
-			// send the match back to the user
-			return reply.send(newMatch);
+			
+			// Let the user know everything went fine
+			return reply.send(newReview);
 		} catch (err) {
-			console.error(err);
-			return reply.status(500).send(err);
+			return reply.status(500).send({ message: err.message });
 		}
-		
 	});
-
 }
+
+
+
+
+
 export default DoggerRoutes;
