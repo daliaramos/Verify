@@ -111,6 +111,20 @@ async function DoggerRoutes(app: FastifyInstance, _options = {}){
 			return reply.status(500).send({ message: err.message });
 		}
 	});
+	app.search<{ Body: { reviewer_id: number } }>("/review", async (req, reply) => {
+		const { reviewer_id } = req.body;
+		
+		try {
+			const reviewerEntity = await req.em.getReference(User, reviewer_id);
+			const review = await req.em.find(Review, { owner: reviewerEntity});
+			return reply.send(review);
+		} catch (err) {
+			return reply.status(500).send({ message: err.message });
+		}
+	});
+	
+	
+	
 }
 
 
