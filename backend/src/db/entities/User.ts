@@ -14,18 +14,20 @@ export class User extends BaseEntity {
 	@Property()
 	petType!: string;
 	
-	@Property()
-	isMached: boolean = false;
-
-	@OneToMany(() => Match,
+	
+	// Note that these DO NOT EXIST in the database itself!
+	@OneToMany(
+		() => Match,
 		match => match.owner,
 		{cascade: [Cascade.PERSIST, Cascade.REMOVE]}
 	)
 	matches!: Collection<Match>;
-
-	@OneToMany(() => Match,
+	
+	@OneToMany(
+		() => Match,
 		match => match.matchee,
-		{cascade: [Cascade.PERSIST, Cascade.REMOVE]})
+		{cascade: [Cascade.PERSIST, Cascade.REMOVE]}
+	)
 	matched_by!: Collection<Match>;
 
 }
