@@ -116,14 +116,47 @@ async function DoggerRoutes(app: FastifyInstance, _options = {}){
 		
 		try {
 			const reviewerEntity = await req.em.getReference(User, reviewer_id);
-			const review = await req.em.find(Review, { owner: reviewerEntity});
+			
+			const review = await req.em.find(Review, {owner: reviewerEntity});
+			console.log(review);
 			return reply.send(review);
+			
+			
 		} catch (err) {
 			return reply.status(500).send({ message: err.message });
 		}
 	});
 	
+	app.put<{ Body: { review_id: number; review: string } }>("/review", async (req, reply) => {
+		const { review_id, review } = req.body;
+		try {
+			const userReview = await req.em.findOneOrFail(Review, review_id);
+			userReview.makeReview = review;
+			await req.em.persistAndFlush(userReview);
+			return reply.send(userReview);
+		} catch (err) {
+			return reply.status(500).send({ message: err.message });
+		}
+	});
 	
+	/*
+	app.delete<{ Body: { review_id: number } }>("/review", async (req, reply) => {
+		const {  review_id} = req.body;
+		
+		try {
+			
+			const revToDelete = await req.em.findOneOrFail(Review,  review_id );
+			console.log(revToDelete);
+			
+			await req.em.removeAndFlush(revToDelete);
+			return reply.send(revToDelete);
+			
+			
+		} catch (err) {
+			return reply.status(500).send({ message: err.message });
+		}
+	});
+*/
 	
 }
 
