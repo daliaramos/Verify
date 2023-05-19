@@ -14,13 +14,17 @@
     "start": "node build/index.js",
     "schema:update": "pnpm mikro-orm-esm schema:update --run --fk-checks",
     "schema:drop": "pnpm mikro-orm-esm schema:drop --run",
+    "schema:fresh":"pnpm mikro-orm-esm schema:fresh",
+    "schema:freshSeed": "pnpm mikro-orm-esm schema:fresh --seed",
+    "migration:fresh": "pnpm mikro-orm-esm migration:fresh",
+    "migration:freshSeed": "pnpm mikro-orm-esm migration:fresh --seed",
     "seed:create": "pnpm mikro-orm-esm seeder:create",
     "migration:create": "pnpm mikro-orm-esm migration:create --name",
     "migration:up": "pnpm mikro-orm-esm migration:up",
     "migration:down": "pnpm mikro-orm-esm migration:down",
     "seed:run": "pnpm mikro-orm-esm seeder:run",
     "db:reset": "pnpm schema:drop && pnpm schema:update && pnpm seed:run",
-    "startProd": "pnpm migration:up && pnpm start",
+    "startProd": "pnpm migration:fresh && pnpm start",
     "docs:generate": "rimraf ./doc/ && typedoc --options typedoc.json --plugin typedoc-plugin-merge-modules"
   },
   "scriptsComments": {
