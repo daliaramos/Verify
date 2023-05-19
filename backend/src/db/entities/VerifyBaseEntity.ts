@@ -6,13 +6,13 @@ import { SoftDeletable } from "mikro-orm-soft-delete";
 export class VerifyBaseEntity extends BaseEntity<VerifyBaseEntity, "id"> {
 	@PrimaryKey()
 	id!: number;
-	
+
 	@Property()
 	created_at = new Date();
-	
-	@Property({onUpdate: () => new Date()})
+
+	@Property({ onUpdate: () => new Date() })
 	updated_at = new Date();
-	
+
 	@Property({ nullable: true })
 	deleted_at?: Date;
 }
