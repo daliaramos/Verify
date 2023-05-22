@@ -139,7 +139,7 @@ async function DoggerRoutes(app: FastifyInstance, _options = {}) {
 
 	/*
 	app.delete<{ Body: { review_id: number } }>("/review", async (req, reply) => {
-		const {  review_id} = req.body;
+		const {  review_id } = req.body;
 		
 		try {
 			
