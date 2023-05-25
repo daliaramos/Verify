@@ -111,6 +111,7 @@ async function DoggerRoutes(app: FastifyInstance, _options = {}) {
 			return reply.status(500).send({ message: err.message });
 		}
 	});
+	
 	app.search<{ Body: { reviewer_id: number } }>("/review", async (req, reply) => {
 		const { reviewer_id } = req.body;
 
@@ -128,7 +129,7 @@ async function DoggerRoutes(app: FastifyInstance, _options = {}) {
 	app.put<{ Body: { review_id: number; review: string } }>("/review", async (req, reply) => {
 		const { review_id, review } = req.body;
 		try {
-			const userReview = await req.em.findOneOrFail(Review, review_id);
+			const userReview = await req.em.findOneOrFail(Review, review_id, {strict: true});
 			userReview.makeReview = review;
 			await req.em.persistAndFlush(userReview);
 			return reply.send(userReview);
@@ -137,24 +138,17 @@ async function DoggerRoutes(app: FastifyInstance, _options = {}) {
 		}
 	});
 
-	/*
 	app.delete<{ Body: { review_id: number } }>("/review", async (req, reply) => {
-		const {  review_id } = req.body;
-		
+		const { review_id } = req.body;
 		try {
-			
-			const revToDelete = await req.em.findOneOrFail(Review,  review_id );
-			console.log(revToDelete);
-			
-			await req.em.removeAndFlush(revToDelete);
-			return reply.send(revToDelete);
-			
-			
+			const reviewToDelete = await req.em.findOneOrFail(Review, review_id, {strict: true});
+			await req.em.removeAndFlush(reviewToDelete);
+			return reply.send(reviewToDelete);
 		} catch (err) {
 			return reply.status(500).send({ message: err.message });
 		}
 	});
-*/
+
 }
 
 export default DoggerRoutes;
