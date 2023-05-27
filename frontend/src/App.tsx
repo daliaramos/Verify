@@ -1,15 +1,30 @@
-import { useState } from 'react'
-import reactLogo from '@images/react.svg'
-import viteLogo from '/vite.svg'
+import {SearchBar} from "@/SearchBar.tsx";
 import '@css/App.css'
-import {Button, Header} from "@/Header.tsx"
+import {Login} from "@/Login.tsx"
+import {Button, Home, UsersList} from "@/Home.tsx"
+
+import {Link, Route, Routes, BrowserRouter} from 'react-router-dom';
 function App() {
   return (
+    <BrowserRouter>
       <div className="App">
-        <Header/>
-        <Button/>
+       <nav>
+         <div className={"menu"}>
+           <Link to={"/"}>Home</Link>
+           <Link to={"login"}>Login</Link>
+           
+         
+         </div>
+       </nav>
+        
+        <Routes>
+          {""}
+          <Route path={"/"} element={<Home />}></Route>
+          <Route path={"/login"} element={<Login />}></Route>
+        </Routes>
       </div>
+    </BrowserRouter>
   );
-};
+}
 
 export default App

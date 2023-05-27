@@ -7,6 +7,16 @@ export function UserRoutesInit(app: FastifyInstance) {
     app.get("/dbTest", async (request: FastifyRequest, _reply: FastifyReply) => {
         return request.em.find(User, {}, { filters: { [SOFT_DELETABLE_FILTER]: false } });
     });
+    
+    // Route that returns all users who ARE NOT SOFT DELETED
+    app.get("/users", async (req, reply) => {
+        try {
+            const theUser = await req.em.find(User, {});
+            reply.send(theUser);
+        } catch (err) {
+            reply.status(500).send(err);
+        }
+    });
 
     app.post<{
         Body: {
