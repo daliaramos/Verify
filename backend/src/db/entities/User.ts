@@ -28,5 +28,5 @@ export class User extends VerifyBaseEntity {
 		cascade: [Cascade.PERSIST, Cascade.REMOVE],
 		orphanRemoval: true,
 	})
-	commented!: Collection<Review>;
+	reviews!: Collection<Review>;
 }
