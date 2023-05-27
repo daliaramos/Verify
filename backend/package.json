@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "0.0.1",
-  "description": "Doggr's main backend",
+  "description": "Verify's main backend",
   "type": "module",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,7 @@
     "start": "node build/index.js",
     "schema:update": "pnpm mikro-orm-esm schema:update --run --fk-checks",
     "schema:drop": "pnpm mikro-orm-esm schema:drop --run",
-    "schema:fresh":"pnpm mikro-orm-esm schema:fresh",
+    "schema:fresh": "pnpm mikro-orm-esm schema:fresh",
     "schema:freshSeed": "pnpm mikro-orm-esm schema:fresh --seed",
     "migration:fresh": "pnpm mikro-orm-esm migration:fresh",
     "migration:freshSeed": "pnpm mikro-orm-esm migration:fresh --seed",
@@ -34,6 +34,7 @@
     "schema:update": "RESETS the REAL database and updates its schema to match our entities code. DO NOT USE ME IN PRODUCTION!"
   },
   "dependencies": {
+    "@fastify/cors": "^8.3.0",
     "@mikro-orm/core": "5.7.3",
     "@mikro-orm/migrations": "5.7.3",
     "@mikro-orm/postgresql": "5.7.3",
