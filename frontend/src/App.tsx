@@ -1,7 +1,6 @@
-import {SearchBar} from "@/SearchBar.tsx";
 import '@css/App.css'
 import {Login} from "@/Login.tsx"
-import {Button, Home, UsersList} from "@/Home.tsx"
+import { Home } from "@/Home.tsx"
 
 import {Link, Route, Routes, BrowserRouter} from 'react-router-dom';
 function App() {
@@ -12,8 +11,6 @@ function App() {
          <div className={"menu"}>
            <Link to={"/"}>Home</Link>
            <Link to={"login"}>Login</Link>
-           
-         
          </div>
        </nav>
         

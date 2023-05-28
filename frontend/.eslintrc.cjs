@@ -22,5 +22,6 @@ module.exports = {
     "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/no-inferrable-types": "off",
     "@typescript-eslint/no-explicit-any": "off",
+    "react/no-multi-comp": [true, {"ignoreStateless": true}]
   },
 };
