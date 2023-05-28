@@ -10,7 +10,7 @@ RUN pnpm install
 
 COPY . .
 EXPOSE 8080
-ENV ADDRESS=0.0.0.0 PORT=8080 DB_HOST=postgres DB_PORT=5432 DB_NAME=verify DB_USER=verify DB_PASS=verify
+ENV ADDRESS=0.0.0.0 PORT=8080 DB_HOST=postgres DB_PORT=5432 DB_NAME=verify DB_USER=verify DB_PASS=verify PASSWORD=password NODE_ENV=development
 
 RUN pnpm build
 

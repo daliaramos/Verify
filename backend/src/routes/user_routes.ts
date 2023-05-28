@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { SOFT_DELETABLE_FILTER } from "mikro-orm-soft-delete";
-import { User } from "../db/entities/User.js";
+import { User, UserRole } from "../db/entities/User.js";
 
 /* eslint-disable*/
 export function UserRoutesInit(app: FastifyInstance) {
@@ -23,14 +23,19 @@ export function UserRoutesInit(app: FastifyInstance) {
             name: string;
             email: string;
             occupation: string;
+            password: string
+          
         };
     }>("/users", async (req, reply) => {
-        const { name, email, occupation } = req.body;
+        const { name, email, occupation, password } = req.body;
         try {
             const newUser = await req.em.create(User, {
                 name,
                 email,
                 occupation,
+                password,
+                // We'll only create Admins manually!
+                role: UserRole.USER
             });
             await req.em.flush();
 
