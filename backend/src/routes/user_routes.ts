@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { SOFT_DELETABLE_FILTER } from "mikro-orm-soft-delete";
 import { User, UserRole } from "../db/entities/User.js";
@@ -9,7 +10,9 @@ export function UserRoutesInit(app: FastifyInstance) {
     });
     
     // Route that returns all users who ARE NOT SOFT DELETED
-    app.get("/users", async (req, reply) => {
+    app.get("/users",
+      { onRequest: [app.auth]},
+      async (req, reply) => {
         try {
             const theUser = await req.em.find(User, {});
             reply.send(theUser);
@@ -29,11 +32,12 @@ export function UserRoutesInit(app: FastifyInstance) {
     }>("/users", async (req, reply) => {
         const { name, email, occupation, password } = req.body;
         try {
+            const hashedPassword = await bcrypt.hash(password, 10);
             const newUser = await req.em.create(User, {
                 name,
                 email,
                 occupation,
-                password,
+                password: hashedPassword,
                 // We'll only create Admins manually!
                 role: UserRole.USER
             });
@@ -92,5 +96,22 @@ export function UserRoutesInit(app: FastifyInstance) {
             console.log(err);
             reply.status(500).send(err);
         }
+    });
+    
+    app.post<{ Body: {email: string, password: string }}>("/login", async(req, reply) => {
+       const { email , password} = req.body;
+       try{
+           const theUser = await req.em.findOneOrFail(User, {email}, {strict: true});
+           
+           const hashCompare = await bcrypt.compare(password, theUser.password);
+           if(hashCompare){
+               const userId = theUser.id;
+               const token = app.jwt.sign({ userId });
+               
+               reply.send({token});
+           }
+       }catch(err){
+            reply.status(500).send(err)
+       }
     });
 }

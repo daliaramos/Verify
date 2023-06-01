@@ -5,6 +5,7 @@ import config from "./db/mikro-orm.config.js";
 import { User } from "./db/entities/User.js";
 import verifyRoutes from "./routes/routes.js";
 import { fastifySearchHttpMethodPlugin } from "./plugins/http_search.js";
+import {  AuthPlugin } from "./plugins/auth.js";
 /* eslint-disable */
 
 const envToLogger = {
@@ -46,4 +47,5 @@ await app.register(cors, {
 await app.register(FastifyMikroOrmPlugin, config);
 await app.register(fastifySearchHttpMethodPlugin, {});
 await app.register(verifyRoutes, {});
+await app.register(AuthPlugin);
 export default app;
