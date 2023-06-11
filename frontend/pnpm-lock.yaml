@@ -1,6 +1,9 @@
 lockfileVersion: '6.0'
 
 dependencies:
+  '@auth0/auth0-react':
+    specifier: ^2.1.0
+    version: 2.1.0(react-dom@18.2.0)(react@18.2.0)
   axios:
     specifier: ^1.4.0
     version: 1.4.0
@@ -101,6 +104,21 @@ packages:
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
     dev: true
+
+  /@auth0/auth0-react@2.1.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-+86qLx97BcSwL/ZwIzGq9jFa5SaV5z7goLU5gi+4R9KhzDg9vhmmZ+iQWW0GMiuwjJ8vcfX4hRTD6iF0DbGZWw==}
+    peerDependencies:
+      react: ^16.11.0 || ^17 || ^18
+      react-dom: ^16.11.0 || ^17 || ^18
+    dependencies:
+      '@auth0/auth0-spa-js': 2.0.7
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /@auth0/auth0-spa-js@2.0.7:
+    resolution: {integrity: sha512-iQ22AZCqOMG0q8/YPkvT4lGe2gsaopZ2kZb2cIBa7w+0hhGJhl6ANpFI6FzAKMzGRGmVocKxYdHha7lxAhbyPA==}
+    dev: false
 
   /@babel/code-frame@7.21.4:
     resolution: {integrity: sha512-LYvhNKfwWSPpocw8GI7gpK2nq3HSDuEPC/uSYaALSJu9xjsalaaYFOq0Pwt5KmVqwEbZlDu81aLXwBOmD/Fv9g==}

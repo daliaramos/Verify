@@ -46,6 +46,7 @@ await app.register(cors, {
 
 await app.register(FastifyMikroOrmPlugin, config);
 await app.register(fastifySearchHttpMethodPlugin, {});
-await app.register(verifyRoutes, {});
 await app.register(AuthPlugin);
+await app.register(verifyRoutes, {});
+
 export default app;
