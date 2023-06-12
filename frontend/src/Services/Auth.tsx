@@ -22,11 +22,7 @@ export const updateAxios = async (token: string) => {
 };
 
 
-export function getTokenFromStorage() {
-	const tokenString = localStorage.getItem("token");
-	const userToken = JSON.parse(tokenString);
-	return userToken?.token;
-}
+
 
 //Will return a token from our backend /login route. Call this funtion if we don't have a token.
 export async function getLoginTokenFromServer(email){
