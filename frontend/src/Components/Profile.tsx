@@ -16,10 +16,7 @@ export const Profile = () => {
 						scope: "read:current_user",
 					},
 				});
-				
-				//localStorage.setItem("token", accessToken)
-				
-				
+			
 				const userDetailsByIdUrl = `https://${domain}/api/v2/users/${user.sub}`;
 				const metadataResponse = await fetch(userDetailsByIdUrl, {
 					headers: {
@@ -27,7 +24,6 @@ export const Profile = () => {
 					},
 				});
 				const { user_metadata } = await metadataResponse.json();
-				
 				setUserMetadata(user_metadata);
 			} catch (e) {
 				console.log(e.message);

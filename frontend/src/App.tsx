@@ -2,6 +2,7 @@ import '@css/App.css'
 import {LoginButton} from "@/Components/Login.tsx";
 import {LogoutButton} from "@/Components/Logout.tsx";
 import {Profile} from "@/Components/Profile.tsx";
+import {Review} from "@/Components/Review.tsx";
 import { Home } from "@/Components/Home.tsx";
 import {updateAxios} from "@/Services/Auth.tsx";
 import {Auth0Provider, useAuth0} from '@auth0/auth0-react';
@@ -12,7 +13,7 @@ import {Link, Route, Routes, BrowserRouter} from 'react-router-dom';
 
 
 function App() {
-  const { user, isAuthenticated, getAccessTokenSilently } = useAuth0()
+  const {isAuthenticated, getAccessTokenSilently } = useAuth0()
   const [token, setToken] = useState(null);
   
   useEffect(() => {
@@ -26,8 +27,8 @@ function App() {
         console.log(e.message);
       }
     };
-    setAccessToken()
-  }, [isAuthenticated]);
+    void setAccessToken()
+  }, [getAccessTokenSilently]);
   
 return (
     
@@ -43,6 +44,7 @@ return (
                : <Link to={"login"}>Login</Link>
            }
            <Link to={"login/profile"}>Profile</Link>
+           <Link to={"Review"}>Review</Link>
          </div>
        </nav>
         
@@ -51,7 +53,8 @@ return (
           <Route path={"/"} element={<Home />}></Route>
           <Route path={"/login"} element={<LoginButton />}></Route>
           <Route path={"/logout"} element={<LogoutButton />}></Route>
-          <Route path={"/login/profile"} element={<Profile />}></Route>
+          <Route path={"/login/profile"} element={<ProtectedRoute><Profile /></ProtectedRoute>}></Route>
+          <Route path={"/review"} element={<ProtectedRoute><Review /></ProtectedRoute>}></Route>
         </Routes>
       </div>
    
