@@ -17,7 +17,8 @@ declare module 'fastify' {
 }
 //
 export const AuthPlugin = fp(async function(app: FastifyInstance, opts: FastifyPluginOptions) {
-	app.register(import("@fastify/jwt"), {
+	app.register(import("fastify-auth0-verify"), {
+		domain: process.env.AUTH_DOMAIN,
 		secret: process.env.AUTH_SECRET
 	});
 	app.decorate("auth",  async function(request: FastifyRequest, reply: FastifyReply) {

@@ -45,6 +45,7 @@
     "bcrypt": "^5.1.0",
     "dotenv": "^16.0.3",
     "fastify": "^4.16.3",
+    "fastify-auth0-verify": "^1.2.0",
     "fastify-firebase": "^1.0.3",
     "fastify-plugin": "^4.5.0",
     "firebase": "^9.22.1",
