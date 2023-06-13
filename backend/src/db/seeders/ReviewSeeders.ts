@@ -5,19 +5,23 @@ import { Review } from "../entities/Review.js";
 export class ReviewSeeder extends Seeder {
     async run(em: EntityManager): Promise<void> {
         em.create(Review, {
-            makeReview: "Great interview"
+            owner: 1,
+            makeReview: "Great interview",
         });
 
         em.create(Review, {
+            owner: 2,
             makeReview: "Horrible interview"
         });
 
         em.create(Review, {
+            owner: 3,
             makeReview: "It was not the best experience"
         });
 
         em.create(Review, {
-            makeReview: "The people were okay but there was one person who was rude"
+            owner: 4,
+            makeReview: "The people were okay but there was one person who was rude",
         });
     }
 }

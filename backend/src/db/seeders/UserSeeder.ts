@@ -8,7 +8,7 @@ export class UserSeeder extends Seeder {
 		
 		const hashedPassword = await bcrypt.hash("password", 10);
 		em.create(User, {
-			name: "Spot",
+			name: "Stacy",
 			email: "email@email.com",
 			occupation: "dentist assistant",
 			password: hashedPassword,
@@ -16,7 +16,7 @@ export class UserSeeder extends Seeder {
 		});
 
 		em.create(User, {
-			name: "Dogbert",
+			name: "Henry",
 			email: "email2@email.com",
 			occupation: "IT",
 			password: hashedPassword,
@@ -24,7 +24,7 @@ export class UserSeeder extends Seeder {
 		});
 
 		em.create(User, {
-			name: "Doglord",
+			name: "Andy",
 			email: "email3@email.com",
 			occupation: "Nurse",
 			password: hashedPassword,
@@ -32,7 +32,7 @@ export class UserSeeder extends Seeder {
 		});
 
 		em.create(User, {
-			name: "NotaDog",
+			name: "Sofia",
 			email: "email4@email.com",
 			occupation: "Software Engineer",
 			password: hashedPassword,

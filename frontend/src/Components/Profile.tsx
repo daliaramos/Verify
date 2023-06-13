@@ -9,7 +9,7 @@ export const Profile = () => {
 	const [userMetadata, setUserMetadata] = useState(null);
 	
 	useEffect(() => {
-		if(isAuthenticated) {
+		
 			const getUserMetadata = async () => {
 				const domain = "dev-icy4q2uffvluyg31.us.auth0.com";
 				try {
@@ -27,7 +27,7 @@ export const Profile = () => {
 						},
 					});
 					
-					console.log(metadataResponse)
+		
 					const {user_metadata} = await metadataResponse.json();
 					setUserMetadata(user_metadata);
 				} catch (e) {
@@ -36,7 +36,7 @@ export const Profile = () => {
 			};
 			
 			void getUserMetadata();
-		}
+		
 	}, [getAccessTokenSilently, user?.sub]);
 	
 	

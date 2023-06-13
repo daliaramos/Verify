@@ -16,9 +16,25 @@ export default defineConfig(({ command, mode }) => {
       environment: "jsdom",
       setupFiles: "./test/setup.ts",
     },
-// vite config
-// https://github.com/vitejs/vite/pull/9880 I am so angry about this
+
     envPrefix: alphabet,
+    /*
+    server:{
+      watch: {
+        usePolling: true,
+      },
+      host: true,
+      strictPort: true,
+      port: 5173,
+    },
+    build: {
+      target: "esnext",
+      emptyOutDit: true,
+      outDir: "build"
+    }
+    */
   };
+  
+  
 });
 

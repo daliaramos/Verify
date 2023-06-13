@@ -1,4 +1,4 @@
-import '@css/App.css'
+
 import {LoginButton} from "@/Components/Login.tsx";
 import {LogoutButton} from "@/Components/Logout.tsx";
 import {Profile} from "@/Components/Profile.tsx";
@@ -43,7 +43,7 @@ return (
            {
              token != null
              ?<Link to={"logout"}>Logout</Link>
-               : <Link to={"login"}>Login</Link>
+               :<Link to={"login"}>Login</Link>
            }
            <Link to={"login/profile"}>Profile</Link>
            <Link to={"review"}>Review</Link>
