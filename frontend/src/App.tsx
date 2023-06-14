@@ -5,6 +5,7 @@ import {Profile} from "@/Components/Profile.tsx";
 
 import {Review} from "@/Components/Review.tsx";
 import { Home } from "@/Components/Home.tsx";
+import {SearchBar} from "@/Components/SearchBar.tsx";
 import {updateAxios} from "@/Services/Auth.tsx";
 import {Auth0Provider, useAuth0} from '@auth0/auth0-react';
 import {createContext, useEffect, useState} from "react";
@@ -47,6 +48,7 @@ return (
            }
            <Link to={"login/profile"}>Profile</Link>
            <Link to={"review"}>Review</Link>
+           <Link to={"search"}>Search</Link>
          </div>
        </nav>
         
@@ -57,6 +59,7 @@ return (
           <Route path={"/logout"} element={<LogoutButton />}></Route>
           <Route path={"/login/profile"} element={<Profile />}></Route>
           <Route path={"/review"} element={<Review />}></Route>
+          <Route path={"/search"} element={<SearchBar />}></Route>
         </Routes>
       </div>
    

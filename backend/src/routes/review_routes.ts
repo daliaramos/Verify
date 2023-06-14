@@ -4,8 +4,8 @@ import {User} from "../db/entities/User.js";
 
 /* eslint-disable*/
 export function ReviewRoutesInit(app: FastifyInstance) {
-    app.post<{ Body: { reviewer_id: number; review: string } }>("/review", async (req, reply) => {
-        const { reviewer_id, review } = req.body;
+    app.post<{ Body: { reviewer_id: number; review: string, company: string } }>("/review", async (req, reply) => {
+        const { reviewer_id, review, company } = req.body;
 
         try {
             const userRepository = req.em.getRepository(User);
@@ -13,6 +13,7 @@ export function ReviewRoutesInit(app: FastifyInstance) {
             const newReview = await req.em.create(Review, {
                 owner: reviewerEntity,
                 makeReview: review,
+                company: company,
             });
             await req.em.flush();
 
@@ -28,7 +29,6 @@ export function ReviewRoutesInit(app: FastifyInstance) {
 
         try {
             const reviewerEntity = await req.em.getReference(User, reviewer_id);
-
             const review = await req.em.find(Review, { owner: reviewerEntity });
             console.log(review);
             return reply.send(review);
@@ -37,11 +37,12 @@ export function ReviewRoutesInit(app: FastifyInstance) {
         }
     });
 
-    app.put<{ Body: { review_id: number; review: string } }>("/review", async (req, reply) => {
-        const { review_id, review } = req.body;
+    app.put<{ Body: { review_id: number; review: string, company: string} }>("/review", async (req, reply) => {
+        const { review_id, review , company} = req.body;
         try {
             const userReview = await req.em.findOneOrFail(Review, review_id, {strict: true});
             userReview.makeReview = review;
+            userReview.company = company;
             await req.em.persistAndFlush(userReview);
             return reply.send(userReview);
         } catch (err) {

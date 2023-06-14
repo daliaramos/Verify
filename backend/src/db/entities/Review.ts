@@ -18,5 +18,8 @@ export class Review extends VerifyBaseEntity {
 
 	@Property()
 	makeReview!: string;
+	
+	@Property()
+	company!: string;
 
 }

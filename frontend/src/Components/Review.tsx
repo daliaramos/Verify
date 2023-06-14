@@ -24,15 +24,26 @@ export const Review = () => {
 	
 	return (
 		isAuthenticated && (
-				<div className="card card-compact w-96 bg-base-100 shadow-xl">
-					<figure><img src="/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" /></figure>
-					<div className="card-body">
-						<h2 className="card-title">Shoes!</h2>
-						<p>If a dog chews shoes whose shoes does he choose?</p>
-						<div className="card-actions justify-end">
-							<button className="btn btn-primary">Buy Now</button>
+			<div>
+				<div className="px-4 sm:px-0">
+					<h3 className="text-base font-semibold leading-7 text-gray-900">Account Details</h3>
+				</div>
+				<div className="mt-6 border-t border-gray-100">
+					<dl className="divide-y divide-gray-100">
+						<div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+							<dt className="text-sm font-medium leading-6 text-gray-900">Full name</dt>
+							<dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"></dd>
 						</div>
-					</div>
+						<div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+							<dt className="text-sm font-medium leading-6 text-gray-900">Email address</dt>
+							<dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"></dd>
+						</div>
+						<div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+							<dt className="text-sm font-medium leading-6 text-gray-900">Email address</dt>
+							<dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">margotfoster@example.com</dd>
+						</div>
+					</dl>
+				</div>
 			</div>
 		)
 	)

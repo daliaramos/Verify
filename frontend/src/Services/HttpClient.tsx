@@ -1,4 +1,4 @@
-import {ProfileType} from "@/VerifyType.ts";
+import {ProfileType, ReviewType} from "@/VerifyType.ts";
 import axios from "axios";
 
 const serverIP = import.meta.env.API_HOST;
@@ -16,8 +16,8 @@ export const httpClient = axios.create({
 
 export async function getNextProfileFromServer() {
 	const profile = await httpClient.get<ProfileType>("/profile");
-	console.log("in getnextprofilefromserver", profile, "proofile.data", profile.data)
 	return profile.data
 }
+
 
 
