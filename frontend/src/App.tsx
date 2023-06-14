@@ -29,7 +29,7 @@ function App() {
       }
     };
     void setAccessToken()
-  }, [getAccessTokenSilently]);
+  }, [getAccessTokenSilently, isAuthenticated]);
   console.log("token", token)
   
 return (

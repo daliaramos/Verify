@@ -12,9 +12,12 @@ export const LoginButton = () => {
 			try {
 				if (isAuthenticated) {
 					const accessToken = await getAccessTokenSilently();
+					/*
 					if (accessToken) {
 						await updateAxios(accessToken);
 					}
+					
+					 */
 				}
 			} catch (e) {
 				console.log(e.message);

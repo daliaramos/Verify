@@ -1,9 +1,26 @@
+import {getNextProfileFromServer} from "@/Services/HttpClient.tsx";
+import {ProfileType} from "@/VerifyType.ts";
 import {useAuth0} from "@auth0/auth0-react";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Navigate} from "react-router-dom";
 
 export const Review = () => {
+	const [currentProfile, setCurrentProfile] = useState<ProfileType>();
 	const { isAuthenticated, loginWithRedirect} = useAuth0();
+
+	
+	const fetchProfile = () => {
+		getNextProfileFromServer()
+			.then((response) => setCurrentProfile(response))
+			.catch((err) => console.log("Error in profile", err));
+	}
+	
+	useEffect(() => {
+		fetchProfile();
+		console.log(currentProfile)
+	}, []);
+	
+	
 	
 	return (
 		isAuthenticated && (

@@ -27,7 +27,6 @@ export const Profile = () => {
 						},
 					});
 					
-		
 					const {user_metadata} = await metadataResponse.json();
 					setUserMetadata(user_metadata);
 				} catch (e) {
