@@ -1,15 +1,21 @@
-import {getNextProfileFromServer} from "@/Services/HttpClient.tsx";
-import {ProfileType} from "@/VerifyType.ts";
+
+import {ProfileType, ReviewType} from "@/VerifyType.ts";
 import {useAuth0} from "@auth0/auth0-react";
 import React, {useEffect, useState} from "react";
-import {Navigate} from "react-router-dom";
+
+export type ProfileProps = ReviewType & {
+
+};
 
 export const Review = () => {
+	//const { } = props;
+	
 	const [currentProfile, setCurrentProfile] = useState<ProfileType>();
 	const { isAuthenticated, loginWithRedirect} = useAuth0();
-
 	
-	const fetchProfile = () => {
+	
+	/*
+	const fetchProfile = (props: ProfileProps) => {
 		getNextProfileFromServer()
 			.then((response) => setCurrentProfile(response))
 			.catch((err) => console.log("Error in profile", err));
@@ -20,13 +26,13 @@ export const Review = () => {
 		console.log(currentProfile)
 	}, []);
 	
-	
+	*/
 	
 	return (
 		isAuthenticated && (
 			<div>
 				<div className="px-4 sm:px-0">
-					<h3 className="text-base font-semibold leading-7 text-gray-900">Account Details</h3>
+					<h3 className="text-base font-semibold leading-7 text-gray-900">Review</h3>
 				</div>
 				<div className="mt-6 border-t border-gray-100">
 					<dl className="divide-y divide-gray-100">

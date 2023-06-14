@@ -60,5 +60,17 @@ export function ReviewRoutesInit(app: FastifyInstance) {
             return reply.status(500).send({ message: err.message });
         }
     });
+    
+    app.search<{ Body: { company: string } }>("/search", async (req, reply) => {
+        const { company } = req.body;
+        try {
+            //const reviewerEntity = await req.em.getReference(User, reviewer_id);
+            const companyReview = await req.em.find(Review, { company: company });
+            console.log(companyReview );
+            return reply.send(companyReview);
+        } catch (err) {
+            return reply.status(500).send({ message: err.message });
+        }
+    });
 
 }
