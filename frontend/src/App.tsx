@@ -2,14 +2,11 @@
 import {LoginButton} from "@/Components/Login.tsx";
 import {LogoutButton} from "@/Components/Logout.tsx";
 import {Profile} from "@/Components/Profile.tsx";
-
-import {ReviewCard} from "@/Components/ReviewCard.tsx";
 import { Home } from "@/Components/Home.tsx";
 import {Reviews} from "@/Components/Reviews.tsx";
 import {SearchBar} from "@/Components/SearchBar.tsx";
-import {updateAxios} from "@/Services/Auth.tsx";
-import {Auth0Provider, useAuth0} from '@auth0/auth0-react';
-import {createContext, useEffect, useState} from "react";
+import {useAuth0} from '@auth0/auth0-react';
+import {useEffect, useState} from "react";
 import {Link, Route, Routes, BrowserRouter} from 'react-router-dom';
 
 
@@ -41,15 +38,15 @@ return (
       <div className="App">
        <nav>
          <div className={"menu"}>
-           <Link to={"/"}>Home</Link>
+           <Link to={"/"}>Home</Link> ||
            {
              token != null
              ?<Link to={"logout"}>Logout</Link>
-               :<Link to={"login"}>Login</Link>
-           }
-           <Link to={"login/profile"}>Profile</Link>
-           <Link to={"review"}>Review</Link>
-           <Link to={"search"}>Search</Link>
+               : <Link to={"login"}>Login</Link>
+           } ||
+           <Link to={"login/profile"}>Profile</Link> ||
+           <Link to={"review"}>Review</Link> ||
+           <Link to={"search"}>Search</Link> ||
          </div>
        </nav>
         

@@ -40,7 +40,8 @@ export const Profile = () => {
 				try {
 					const userFound = await httpClient.search("/users", {email: user.email});
 					if (!userFound.data){
-							await ProfileService.send(user.name, user.email, "");
+						let occupation = "Eh";
+							await ProfileService.send(user.name, user.email, occupation);
 					}
 				}catch(err){
 					setProfileError(true);

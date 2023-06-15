@@ -1,20 +1,21 @@
+import {ReviewCard} from "@/Components/ReviewCard.tsx";
 import {httpClient} from "@/Services/HttpClient.tsx";
 import {ReviewService} from "@/Services/ReviewService.tsx";
 import {useAuth0} from "@auth0/auth0-react";
-import {useCallback, useState} from 'react'
-import {useNavigate} from "react-router-dom";
+import React, {useCallback, useState} from 'react'
 
 export const Reviews = () => {
 	const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
 	const [company, setCompany] = useState("");
 	const [review, setReview] = useState("");
-	
+	const [card, setCard] = useState(false);
 	const makeReview = useCallback(async () => {
 		const createReview = async () => {
 			try {
 				const userFound = await httpClient.search("/users", {email: user.email});
 				if (userFound.data){
 					await ReviewService.send(userFound.data.id, review, company);
+					setCard(true);
 				}
 			}catch(err){
 				console.error("Error creating review", err)
@@ -22,8 +23,7 @@ export const Reviews = () => {
 		}
 		createReview();
 	}, [company, review]);
-	
-	
+
 	return isAuthenticated && (
 		<div className="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
 			<div
@@ -81,8 +81,28 @@ export const Reviews = () => {
 					>
 						Post
 					</button>
+					
+					{
+						card && <div>
+              <div className="px-4 sm:px-0">
+                <h3 className="text-base font-semibold leading-7 text-gray-900">Review</h3>
+              </div>
+              <div className="mt-6 border-t border-gray-100">
+                <dl className="divide-y divide-gray-100">
+                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt className="text-sm font-medium leading-6 text-gray-900">Company</dt>
+                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{company}</dd>
+                  </div>
+                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt className="text-sm font-medium leading-6 text-gray-900">Review</dt>
+                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{review}</dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
+					}
+					
 				</div>
-			
 		</div>
 	)
 }
