@@ -5,7 +5,7 @@ import App from './App.tsx'
 import { Auth0Provider } from '@auth0/auth0-react';
 const rootContainer: HTMLElement = document.getElementById('root') as HTMLElement;
 ReactDOM.createRoot(rootContainer).render(
- 
+  
   <React.StrictMode>
     <Auth0Provider
       domain="dev-icy4q2uffvluyg31.us.auth0.com"

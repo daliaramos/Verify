@@ -4,6 +4,8 @@ import {User} from "../db/entities/User.js";
 
 /* eslint-disable*/
 export function ReviewRoutesInit(app: FastifyInstance) {
+    
+    
     app.post<{ Body: { reviewer_id: number; review: string, company: string } }>("/review", async (req, reply) => {
         const { reviewer_id, review, company } = req.body;
 
@@ -49,7 +51,8 @@ export function ReviewRoutesInit(app: FastifyInstance) {
             return reply.status(500).send({ message: err.message });
         }
     });
-
+    
+    //Route to delete review
     app.delete<{ Body: { review_id: number } }>("/review", async (req, reply) => {
         const { review_id } = req.body;
         try {
@@ -61,6 +64,7 @@ export function ReviewRoutesInit(app: FastifyInstance) {
         }
     });
     
+    //Route to search for company property in reviewdb.
     app.search<{ Body: { company: string } }>("/search", async (req, reply) => {
         const { company } = req.body;
         try {

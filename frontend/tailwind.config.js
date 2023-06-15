@@ -6,7 +6,7 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [daisyui],
+  plugins: [require('@tailwindcss/forms')],
   daisyui: {
     themes: ["business"]
   }

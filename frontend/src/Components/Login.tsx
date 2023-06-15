@@ -1,30 +1,11 @@
 import { updateAxios} from "@/Services/Auth.tsx";
 import React, {useCallback, useEffect, useState} from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Dialog } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+
 
 export const LoginButton = () => {
 	const { loginWithRedirect } = useAuth0();
-	const {isAuthenticated, getAccessTokenSilently } = useAuth0();
-	useEffect(() => {
-		const setAccessToken = async () => {
-			try {
-				if (isAuthenticated) {
-					const accessToken = await getAccessTokenSilently();
-					/*
-					if (accessToken) {
-						await updateAxios(accessToken);
-					}
-					
-					 */
-				}
-			} catch (e) {
-				console.log(e.message);
-			}
-		};
-			setAccessToken()
-		}, [isAuthenticated]);
+	
 	return(
 		<div className="bg-white">
 			<div className="relative isolate px-6 pt-14 lg:px-8">

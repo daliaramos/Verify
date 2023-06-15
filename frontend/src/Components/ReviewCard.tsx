@@ -7,7 +7,7 @@ export type ProfileProps = ReviewType & {
 
 };
 
-export const Review = () => {
+export const ReviewCard = () => {
 	//const { } = props;
 	
 	const [currentProfile, setCurrentProfile] = useState<ProfileType>();

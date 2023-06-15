@@ -1,15 +1,14 @@
 
-import React, { useEffect, useState } from "react";
+import {httpClient} from "@/Services/HttpClient.tsx";
+import {ProfileService} from "@/Services/ProfileService.tsx";
+import React, {useEffect, useState} from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { PaperClipIcon } from '@heroicons/react/20/solid'
-
 
 export const Profile = () => {
 	const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
 	const [userMetadata, setUserMetadata] = useState(null);
-	
+	const [profileError, setProfileError] = useState(false);
 	useEffect(() => {
-		
 			const getUserMetadata = async () => {
 				const domain = "dev-icy4q2uffvluyg31.us.auth0.com";
 				try {
@@ -26,6 +25,7 @@ export const Profile = () => {
 							Authorization: `Bearer ${accessToken}`,
 						},
 					});
+				
 					
 					const {user_metadata} = await metadataResponse.json();
 					setUserMetadata(user_metadata);
@@ -35,9 +35,20 @@ export const Profile = () => {
 			};
 			
 			void getUserMetadata();
-		
+			//Creates an Account to gain access to other paths
+			const getAccount = async () => {
+				try {
+					const userFound = await httpClient.search("/users", {email: user.email});
+					if (!userFound.data){
+							await ProfileService.send(user.name, user.email, "");
+					}
+				}catch(err){
+					setProfileError(true);
+				}
+			}
+			void getAccount();
+
 	}, [getAccessTokenSilently, user?.sub]);
-	
 	
 	return (
 		isAuthenticated && (
@@ -55,10 +66,6 @@ export const Profile = () => {
 						<dt className="text-sm font-medium leading-6 text-gray-900">Email address</dt>
 						<dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{user.email}</dd>
 					</div>
-					<div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-						<dt className="text-sm font-medium leading-6 text-gray-900">Email address</dt>
-						<dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">margotfoster@example.com</dd>
-					</div>
 				</dl>
 			</div>
 		</div>
@@ -66,5 +73,5 @@ export const Profile = () => {
 	);
 };
 
-
+/* Reference: I used tailwindcss component react code to render my account info. */
 

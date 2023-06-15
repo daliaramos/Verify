@@ -3,8 +3,9 @@ import {LoginButton} from "@/Components/Login.tsx";
 import {LogoutButton} from "@/Components/Logout.tsx";
 import {Profile} from "@/Components/Profile.tsx";
 
-import {Review} from "@/Components/Review.tsx";
+import {ReviewCard} from "@/Components/ReviewCard.tsx";
 import { Home } from "@/Components/Home.tsx";
+import {Reviews} from "@/Components/Reviews.tsx";
 import {SearchBar} from "@/Components/SearchBar.tsx";
 import {updateAxios} from "@/Services/Auth.tsx";
 import {Auth0Provider, useAuth0} from '@auth0/auth0-react';
@@ -58,7 +59,7 @@ return (
           <Route path={"/login"} element={<LoginButton />}></Route>
           <Route path={"/logout"} element={<LogoutButton />}></Route>
           <Route path={"/login/profile"} element={<Profile />}></Route>
-          <Route path={"/review"} element={<Review />}></Route>
+          <Route path={"/review"} element={<Reviews />}></Route>
           <Route path={"/search"} element={<SearchBar />}></Route>
         </Routes>
       </div>

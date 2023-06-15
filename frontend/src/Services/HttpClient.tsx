@@ -19,15 +19,13 @@ let httpClient: SearchableAxiosInstance = axios.create({
 	
 }) as SearchableAxiosInstance;
 
-// Note we have to do this separately from axios.create above
-// because it has to be first typecast to Searchable
 httpClient.search = async(path, data) => {
 	let config = {
 		method: "SEARCH",
 		url: serverUrl + path,
 		data
 	};
-	console.log(config.url)
+	
 	return httpClient.request(config);
 	
 };

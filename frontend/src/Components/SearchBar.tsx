@@ -1,11 +1,13 @@
-import {Review} from "@/Components/Review.tsx";
+import {ReviewCard} from "@/Components/ReviewCard.tsx";
 import {httpClient} from "@/Services/HttpClient.tsx";
 import {useCallback, useState} from "react";
 
 export const SearchBar = () => {
 	const [company, setCompany] = useState("");
 	const searchForReview = useCallback(async () => {
-		async function reviewFound() {
+		
+		//Any user can search for reviews on a company with out loggin
+		async function searchCompany() {
 			try {
 				const reviewResponse = await httpClient.search("/search", {company: company});
 				const foundReview = reviewResponse.data;
@@ -15,15 +17,10 @@ export const SearchBar = () => {
 				console.error("Error getting review");
 			}
 		}
-		
-		reviewFound().catch(err => console.error("Failed to get review", err))
+		searchCompany().catch(err => console.error("Failed to get review", err))
 	}, [company]);
 	
-	
-	
-	
 
-	
 	return (
 		<div>
 			<div>
@@ -34,7 +31,7 @@ export const SearchBar = () => {
 				required
 				value={company}
 				onChange={(e) => setCompany(e.target.value)}
-				name={"email"}
+				name={"company"}
 			/>
 			</div>
 			<div>
@@ -43,3 +40,4 @@ export const SearchBar = () => {
 		</div>
 	);
 };
+/* Reference: I used tailwindcss react code component to create a input field.*/

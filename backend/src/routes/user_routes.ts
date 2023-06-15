@@ -1,4 +1,3 @@
-import bcrypt from "bcrypt";
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { SOFT_DELETABLE_FILTER } from "mikro-orm-soft-delete";
 import { User, UserRole } from "../db/entities/User.js";
@@ -9,7 +8,7 @@ export function UserRoutesInit(app: FastifyInstance) {
         return request.em.find(User, {}, { filters: { [SOFT_DELETABLE_FILTER]: false } });
     });
     
-    // Route that returns all users who ARE NOT SOFT DELETED
+    // Route that returns all users.
     app.get("/users",
       { onRequest: [app.auth]},
       async (req, reply) => {
@@ -20,30 +19,24 @@ export function UserRoutesInit(app: FastifyInstance) {
             reply.status(500).send(err);
         }
     });
-
+    
+    //Route to create an account
     app.post<{
         Body: {
             name: string;
             email: string;
             occupation: string;
-            password: string
-          
         };
     }>("/users", async (req, reply) => {
-        const { name, email, occupation, password } = req.body;
+        const { name, email, occupation } = req.body;
         try {
-            const hashedPassword = await bcrypt.hash(password, 10);
             const newUser = await req.em.create(User, {
                 name,
                 email,
                 occupation,
-                password: hashedPassword,
-                // We'll only create Admins manually!
                 role: UserRole.USER
             });
             await req.em.flush();
-
-            console.log("created new user", newUser);
             return reply.send(newUser);
         } catch (err) {
             console.log("failed to create a new user", err.message);
@@ -56,15 +49,14 @@ export function UserRoutesInit(app: FastifyInstance) {
         const { email } = req.body;
         try {
             const theUser = await req.em.findOne(User, { email });
-            console.log(theUser);
-            reply.send(theUser);
+          reply.send(theUser);
         } catch (err) {
             console.log(err);
             reply.status(500).send(err);
         }
     });
 
-    //update
+    //Route to modify user info
     app.put<{
         Body: {
             name: string;
@@ -83,7 +75,7 @@ export function UserRoutesInit(app: FastifyInstance) {
         reply.send(userToChange);
     });
 
-    //Delete
+    //Route to delete an account
     app.delete<{ Body: { email: string } }>("/users", async (req, reply) => {
         const { email } = req.body;
         try {
@@ -98,28 +90,17 @@ export function UserRoutesInit(app: FastifyInstance) {
         }
     });
     
-    app.post<{ Body: {email: string, password: string }}>("/login", async(req, reply) => {
-       const { email , password} = req.body;
+    //Does not work aas expected.
+    app.post<{ Body: {email: string }}>("/login", async(req, reply) => {
+       const { email} = req.body;
        try{
-           const theUser = await req.em.findOneOrFail(User, {email}, {strict: true});
+           const theUser = await req.em.findOneOrFail(User, {email}, { strict: true });
+           const userId = theUser.id;
+           const token = app.jwt.sign("")
            
-           const hashCompare = await bcrypt.compare(password, theUser.password);
-           if(hashCompare){
-               const userId = theUser.id;
-               const token = app.jwt.sign({ userId });
-               
-               reply.send({token});
-           }
+           reply.send({ token });
        }catch(err){
             reply.status(500).send(err)
        }
     });
-    
-    app.get("/profile", async(req, reply) => {
-        const userRepo = req.em.getRepository(User);
-        const totalCount = await userRepo.count();
-        const randomOffset = Math.floor(Math.random() * totalCount);
-        const randomEntity = await userRepo.findOne({},{offset: randomOffset});
-        reply.send(randomEntity);
-    } )
 }
