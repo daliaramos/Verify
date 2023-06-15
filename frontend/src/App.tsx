@@ -29,7 +29,6 @@ function App() {
     };
     void setAccessToken()
   }, [getAccessTokenSilently, isAuthenticated]);
-  console.log("token", token)
   
 return (
     

@@ -4,9 +4,8 @@ import React, {useCallback, useState} from "react";
 
 export const SearchBar = () => {
 	const [company, setCompany] = useState("");
-	const [review, setReview] = useState("");
+	const [review, setReview] = useState([]);
 	const [card, setCard] = useState(false);
-	
 	const searchForReview = useCallback(async () => {
 		
 		//Any user can search for reviews on a company with out loggin
@@ -14,23 +13,17 @@ export const SearchBar = () => {
 			try {
 				const reviewResponse = await httpClient.search("/search", {company: company});
 				if(reviewResponse.data.length > 0) {
-					setCard(
-						true
-					)
-					
-					setReview(reviewResponse.data[0].makeReview)
+					const reviewArr = reviewResponse.data;
+					setCard(true);
+					setReview(reviewArr);
 				}
-				
 			}catch(err){
 				console.error("Error getting review");
 			}
 		}
 		searchCompany().catch(err => console.error("Failed to get review", err))
-	}, [company, card]);
+	}, [company]);
 	
-	const getReview = (
-		<ReviewCard company={company} review={review}/>
-	)
 	return (
 		<div>
 			<div>
@@ -48,9 +41,19 @@ export const SearchBar = () => {
 				<button onClick={searchForReview}>Search</button>
 			</div>
 			{
-					card && (getReview)
+					card &&
+					review.map((reviews: { company: string; makeReview: string, id: number}) => (
+						<div key={reviews.id}>
+							{" "}
+									<ReviewCard company={reviews.company} review={reviews.makeReview}/>
+						</div>
+					))
 			}
 		</div>
 	);
 };
 /* Reference: I used tailwindcss react code component to create a input field.*/
+
+/*
+ */
+
