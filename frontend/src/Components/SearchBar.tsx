@@ -1,8 +1,10 @@
+import {ReviewCard} from "@/Components/ReviewCard.tsx";
 import {httpClient} from "@/Services/HttpClient.tsx";
 import React, {useCallback, useState} from "react";
 
 export const SearchBar = () => {
 	const [company, setCompany] = useState("");
+	const [review, setReview] = useState("");
 	const [card, setCard] = useState(false);
 	
 	const searchForReview = useCallback(async () => {
@@ -11,20 +13,24 @@ export const SearchBar = () => {
 		async function searchCompany() {
 			try {
 				const reviewResponse = await httpClient.search("/search", {company: company});
-				const foundReview = reviewResponse.data;
-				console.log("Review", foundReview.data );
-				setCard(
-					true
-				)
+				if(reviewResponse.data.length > 0) {
+					setCard(
+						true
+					)
+					
+					setReview(reviewResponse.data[0].makeReview)
+				}
 				
 			}catch(err){
 				console.error("Error getting review");
 			}
 		}
 		searchCompany().catch(err => console.error("Failed to get review", err))
-	}, [company]);
+	}, [company, card]);
 	
-
+	const getReview = (
+		<ReviewCard company={company} review={review}/>
+	)
 	return (
 		<div>
 			<div>
@@ -41,27 +47,9 @@ export const SearchBar = () => {
 			<div>
 				<button onClick={searchForReview}>Search</button>
 			</div>
-			
 			{
-					card && <div>
-          <div className="px-4 sm:px-0">
-            <h3 className="text-base font-semibold leading-7 text-gray-900">Review</h3>
-          </div>
-          <div className="mt-6 border-t border-gray-100">
-            <dl className="divide-y divide-gray-100">
-              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                <dt className="text-sm font-medium leading-6 text-gray-900">Company</dt>
-                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{company}</dd>
-              </div>
-              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                <dt className="text-sm font-medium leading-6 text-gray-900">Review</dt>
-                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{}</dd>
-              </div>
-            </dl>
-          </div>
-        </div>
+					card && (getReview)
 			}
-			
 		</div>
 	);
 };
