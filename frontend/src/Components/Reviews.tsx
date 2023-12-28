@@ -63,6 +63,14 @@ export const Reviews = () => {
 							/>
 						</div>
 					</div>
+					<div className="rating">
+						<input type="radio" name="rating-1" className="mask mask-star" />
+						<input type="radio" name="rating-1" className="mask mask-star" checked />
+						<input type="radio" name="rating-1" className="mask mask-star" />
+						<input type="radio" name="rating-1" className="mask mask-star" />
+						<input type="radio" name="rating-1" className="mask mask-star" />
+					</div>
+
 					<div className="sm:col-span-2">
 						<label htmlFor="email" className="block text-sm font-semibold leading-6 text-gray-900">
 							Review

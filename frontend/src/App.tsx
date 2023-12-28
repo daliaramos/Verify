@@ -34,9 +34,9 @@ return (
       <div className="App">
        <nav>
          <div className={"menu"}>
-             <div className="navbar bg-base-100">
+             <div className="navbar bg-base-100 text-white">
              {/*    <div className="flex-1 text-xl">
-                     <Link to={"login/profile"}>Profile</Link>
+
                  </div>
                  <div className="flex-1 text-xl">
                      <Link to={"review"}>Review</Link>
@@ -45,24 +45,25 @@ return (
                      <Link to={"search"}>Search</Link>
                  </div>
                  <div className="flex-1 btn btn-ghost text-xl">
-                     <Link to={"/"}>Home</Link>
+
                  </div>*/}
                  <div className="flex-1">
                      <ul className="menu menu-horizontal px-1">{
                          token == null ?
-                         <li> <button onClick={() => loginWithRedirect()}>Login/Sign Up</button></li>
-
+                         <li className={""}> <button className="bg-slate-950 text-white" onClick={() => loginWithRedirect()}>Login/Sign Up</button></li>
                              :
                          <li>
-                             <details>
-                                 <summary>
-                                     Parent
+                             <details className="bg-slate-950">
+                                 <summary className={"my-3 font-mono"}>
+                                     Welcome Back!
                                  </summary>
-                                 <ul className="p-2 bg-base-100 rounded-t-none">
+                                 <ul className="bg-base-100 text-black rounded-t-none">
+                                     <li><Link to={"login/profile"}>Account</Link></li>
+                                     <li> <Link to={"/"}>Home</Link></li>
                                      <li><button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
                                          Log Out
                                      </button></li>
-                                     <li><a>Link 2</a></li>
+
                                  </ul>
                              </details>
                          </li>
