@@ -1,6 +1,9 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import {Review} from "../db/entities/Review.js";
 import {User} from "../db/entities/User.js";
+/**
+ * @param {FastifyInstance} app - fastigy dsda
+ */
 
 /* eslint-disable*/
 export function ReviewRoutesInit(app: FastifyInstance) {
